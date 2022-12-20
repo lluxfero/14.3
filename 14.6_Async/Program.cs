@@ -1,4 +1,6 @@
-﻿var countdownGeneral = new CountdownEvent(3); // блок для трёх главных результатов
+﻿using System.IO;
+
+var countdownGeneral = new CountdownEvent(3); // блок для трёх главных результатов
 var countdownB = new CountdownEvent(2); // блок для операций В
 var countdownCStreakD = new CountdownEvent(3); // 
 EventWaitHandle BWaiter = new AutoResetEvent(false);
@@ -19,7 +21,8 @@ Console.WriteLine(b);
 
 async Task<string> ResultAAsync()
 {
-    string a = OperationA();
+    string a = String.Empty;
+    await Task.Run(() => a = OperationA());
     BWaiter.Set(); // пропускаем результат В
     string b = OperationB("ResultA");
     string c = OperationC();
